@@ -717,8 +717,7 @@ dependencies = [
 [[package]]
 name = "candle-core"
 version = "0.8.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "06ccf5ee3532e66868516d9b315f73aec9f34ea1a37ae98514534d458915dbf1"
+source = "git+https://github.com/huggingface/candle.git?tag=0.8.4#468d1d525fe206a35d6962c02cfa7b9918b31076"
 dependencies = [
  "byteorder",
  "candle-kernels 0.8.4",
@@ -750,8 +749,7 @@ dependencies = [
 [[package]]
 name = "candle-kernels"
 version = "0.8.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a10885bd902fad1b8518ba2b22369aaed88a3d94e123533ad3ca73db33b1c8ca"
+source = "git+https://github.com/huggingface/candle.git?tag=0.8.4#468d1d525fe206a35d6962c02cfa7b9918b31076"
 dependencies = [
  "bindgen_cuda 0.1.5",
 ]

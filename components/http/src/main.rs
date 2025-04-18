@@ -24,7 +24,7 @@ use dynamo_llm::{
     model_type::ModelType,
 };
 use dynamo_runtime::{
-    logging, transports::etcd::PrefixWatcher, DistributedRuntime, Result, Runtime, Worker,
+    debug_here, logging, transports::etcd::PrefixWatcher, DistributedRuntime, Result, Runtime, Worker
 };
 
 #[derive(Parser)]
@@ -48,6 +48,7 @@ struct Args {
 }
 
 fn main() -> Result<()> {
+    debug_here();
     logging::init();
     let worker = Worker::from_settings()?;
     worker.execute(app)

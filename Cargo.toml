@@ -74,9 +74,15 @@ insta.opt-level = 3
 
 [profile.dev]
 # release level optimizations otherwise everything feels slow
-opt-level = 3
+opt-level = 0   # ✅ 禁用优化
+debug = 2       # ✅ 强制生成完整调试符号
+
 
 [profile.release]
 # These make the build much slower but shrink the binary, and could help performance
 codegen-units = 1
 lto = true
+
+[patch.crates-io]
+# 强制统一到 0.8.4 版本
+candle-core = { git = "https://github.com/huggingface/candle.git", tag = "0.8.4" }

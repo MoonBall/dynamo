@@ -83,3 +83,7 @@ Chart.lock
 generated-values.yaml
 
 TensorRT-LLM
+
+
+deploy/dynamo/sdk/src/dynamo/sdk/cli/bin/
+.devcontainer/.proxy-ss-privoxy.sh

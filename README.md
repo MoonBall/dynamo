@@ -132,11 +132,18 @@ To develop locally, we recommend working inside of the container
 ./container/build.sh
 ./container/run.sh -it --mount-workspace
 
+# debug build
+cargo build 
+mkdir -p /workspaces/dynamo/deploy/dynamo/sdk/src/dynamo/sdk/cli/bin
+cp /workspaces/dynamo/target/debug/http /workspaces/dynamo/deploy/dynamo/sdk/src/dynamo/sdk/cli/bin
+cp /workspaces/dynamo/target/debug/llmctl /workspaces/dynamo/deploy/dynamo/sdk/src/dynamo/sdk/cli/bin
+cp /workspaces/dynamo/target/debug/dynamo-run /workspaces/dynamo/deploy/dynamo/sdk/src/dynamo/sdk/cli/bin
+
 cargo build --release
 mkdir -p /workspace/deploy/dynamo/sdk/src/dynamo/sdk/cli/bin
 cp /workspace/target/release/http /workspace/deploy/dynamo/sdk/src/dynamo/sdk/cli/bin
 cp /workspace/target/release/llmctl /workspace/deploy/dynamo/sdk/src/dynamo/sdk/cli/bin
 cp /workspace/target/release/dynamo-run /workspace/deploy/dynamo/sdk/src/dynamo/sdk/cli/bin
 
-uv pip install -e .
+pip install -e .[all]
 ```

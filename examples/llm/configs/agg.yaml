@@ -12,28 +12,33 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+Common:
+  model: /workspaces/models/Meta-Llama-3-8B-Instruct/
+  block-size: 64
+  max-model-len: 8192
 
 Frontend:
-  served_model_name: deepseek-ai/DeepSeek-R1-Distill-Llama-8B
+  served_model_name: Meta-Llama-3-8B-Instruct
   endpoint: dynamo.Processor.chat/completions
   port: 8000
 
 Processor:
-  model: deepseek-ai/DeepSeek-R1-Distill-Llama-8B
-  block-size: 64
-  max-model-len: 16384
   router: round-robin
+  model: /workspaces/models/Meta-Llama-3-8B-Instruct/
+  block-size: 64
+  max-model-len: 8192
 
 VllmWorker:
-  model: deepseek-ai/DeepSeek-R1-Distill-Llama-8B
   enforce-eager: true
-  block-size: 64
-  max-model-len: 16384
   max-num-batched-tokens: 16384
   enable-prefix-caching: true
   router: random
-  tensor-parallel-size: 1
+  tensor-parallel-size: 8
+  trust-remote-code: true
   ServiceArgs:
     workers: 1
     resources:
-      gpu: 1
+      gpu: 8
+  model: /workspaces/models/Meta-Llama-3-8B-Instruct/
+  block-size: 64
+  max-model-len: 8192

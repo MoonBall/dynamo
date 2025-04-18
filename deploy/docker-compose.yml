@@ -15,7 +15,7 @@
 
 services:
   nats-server:
-    image: nats
+    image: eic-cn-beijing.cr.volces.com/eic-image/nats:latest
     command: [ "-js", "--trace" ]
     ports:
       - 4222:4222
@@ -23,7 +23,7 @@ services:
       - 8222:8222
 
   etcd-server:
-    image: bitnami/etcd
+    image: eic-cn-beijing.cr.volces.com/eic-image/etcd:latest
     environment:
       - ALLOW_NONE_AUTHENTICATION=yes
     ports:
@@ -31,7 +31,7 @@ services:
       - 2380:2380
 
   prometheus:
-    image: prom/prometheus:latest
+    image: eic-cn-beijing.cr.volces.com/eic-image/prometheus:latest
     container_name: prometheus
     volumes:
       - ./metrics/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -52,7 +52,7 @@ services:
     profiles: [metrics]
 
   grafana:
-    image: grafana/grafana-enterprise:latest
+    image: eic-cn-beijing.cr.volces.com/eic-image/grafana-enterprise:latest
     container_name: grafana
     volumes:
       - ./metrics/grafana.json:/etc/grafana/provisioning/dashboards/llm-worker-dashboard.json

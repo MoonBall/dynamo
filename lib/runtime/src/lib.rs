@@ -89,3 +89,27 @@ pub struct DistributedRuntime {
     // startup. Will not start etcd.
     is_static: bool,
 }
+
+pub fn debug_here() {
+    use std::env;
+    let var_name = "RS_DEBUG_START_UP";
+    let is_non_empty = env::var(var_name)
+    .map(|value| !value.is_empty())
+    .unwrap_or(false);
+
+    if !is_non_empty {
+        return;
+    }
+
+    use std::io::{self, Read};
+    use std::fs;
+    use std::io::Write;
+
+	println!("\n\n\t等待调试器附加，先附加调试器，再执行以下命令：");
+	println!("\t\t\t touch /workspaces/models/__dyn_dev_continue_debug__ \n\n");
+    io::stdout().flush().unwrap();  // 确保立即输出
+    // 循环检查文件是否存在
+    while fs::metadata("/workspaces/models/__dyn_dev_continue_debug__").is_err() {
+        std::thread::sleep(std::time::Duration::from_secs(1));
+    }
+}

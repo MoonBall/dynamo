@@ -181,6 +181,10 @@ RUN mkdir /opt/dynamo && \
 ENV VIRTUAL_ENV=/opt/dynamo/venv
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
+ENV UV_HTTP_TIMEOUT=300000
+ENV UV_DEFAULT_INDEX="https://mirrors.ivolces.com/pypi/simple/"
+RUN pip config set global.index-url https://mirrors.ivolces.com/pypi/simple/
+
 # Common dependencies
 RUN --mount=type=bind,source=./container/deps/requirements.txt,target=/tmp/requirements.txt \
     uv pip install --requirement /tmp/requirements.txt
@@ -242,7 +246,24 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     RUST_VERSION=1.86.0 \
     RUSTARCH=x86_64-unknown-linux-gnu
 
-RUN wget --tries=3 --waitretry=5 "https://static.rust-lang.org/rustup/archive/1.28.1/${RUSTARCH}/rustup-init" && \
+ENV RUSTUP_DIST_SERVER="https://rsproxy.cn"
+ENV RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
+RUN mkdir -p ~/.cargo && \
+    cat <<EOF > ~/.cargo/config
+[source.crates-io]
+replace-with = 'rsproxy-sparse'
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
+[source.rsproxy-sparse]
+registry = "sparse+https://rsproxy.cn/index/"
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+[net]
+git-fetch-with-cli = true
+EOF
+    
+
+RUN wget --tries=3 --waitretry=5 "https://rsproxy.cn/rustup/archive/1.28.1/${RUSTARCH}/rustup-init" && \
     echo "a3339fb004c3d0bb9862ba0bce001861fe5cbde9c10d16591eb3f39ee6cd3e7f *rustup-init" | sha256sum -c - && \
     chmod +x rustup-init && \
     ./rustup-init -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION --default-host ${RUSTARCH} && \

@@ -15,18 +15,18 @@
 
 
 Frontend:
-  served_model_name: deepseek-ai/DeepSeek-R1-Distill-Llama-8B
+  served_model_name: Meta-Llama-3-8B-Instruct
   endpoint: dynamo.Processor.chat/completions
   port: 8000
 
 Processor:
-  model: deepseek-ai/DeepSeek-R1-Distill-Llama-8B
+  model: /workspaces/models/Meta-Llama-3-8B-Instruct/
   router: round-robin
 
 VllmWorker:
-  model: deepseek-ai/DeepSeek-R1-Distill-Llama-8B
+  model: /workspaces/models/Meta-Llama-3-8B-Instruct/
   kv-transfer-config: '{"kv_connector":"DynamoNixlConnector"}'
-  max-model-len: 16384
+  max-model-len: 8192
   remote-prefill: true
   conditional-disagg: true
   max-local-prefill-length: 10
@@ -37,9 +37,9 @@ VllmWorker:
       gpu: 1
 
 PrefillWorker:
-  model: deepseek-ai/DeepSeek-R1-Distill-Llama-8B
+  model: /workspaces/models/Meta-Llama-3-8B-Instruct/
   kv-transfer-config: '{"kv_connector":"DynamoNixlConnector"}'
-  max-model-len: 16384
+  max-model-len: 8192
   max-num-batched-tokens: 16384
   ServiceArgs:
     workers: 1
